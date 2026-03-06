@@ -1,43 +1,88 @@
 <!DOCTYPE html>
-<!--
-© 2026 Cristiane Oliveira
-Material exclusivo para alunos.
-Proibida reprodução, distribuição ou revenda.
-Lei 9.610/98 – Direitos Autorais.
--->
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Convite Yasmin - 6 Anos</title>
     <style>
         :root {
             --cor-botao-x: #9b59b6; 
             --cor-botao-som: #9b59b6; 
-            --distancia-botoes-rodape: 200px;
-            --espaco-entre-botoes: 40px; 
-            --tamanho-clicavel: 75px; 
+            
+            /* ALUNAS: Ajustem a posição vertical dos botões aqui (em %) */
+            /* 80% significa que o botão está a 80% do topo da imagem */
+            --posicao-vertical-botoes: 85%;
+            
+            --espaco-entre-botoes: 5%; 
+            --tamanho-clicavel: 65px; 
         }
 
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; font-family: sans-serif; background: #000; }
+        /* Ajuste para evitar rolagem e aplicar cores de fundo */
+        body, html { 
+            margin: 0; 
+            padding: 0; 
+            width: 100%; 
+            /* Substituído vh por dvh para evitar cortes no Safari */
+            height: 100dvh; 
+            overflow: hidden; 
+            font-family: sans-serif; 
+            background: #000; 
+        }
+
+        /* Container principal que mantém a proporção da arte */
+        .media-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100dvh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
         .page {
-            position: fixed;
+            position: absolute;
             top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
+            width: 100%; height: 100%;
             display: none;
+            justify-content: center;
+            align-items: center;
         }
 
-        .active { display: block; }
+        .active { display: flex; }
 
-        #principal { background-image: url('pagina.png'); }
-        #sugestao { background-image: url('pagina2.png'); background-color: #fff; }
-        /* Nova Página 3 */
-        #pagina3 { background-image: url('pagina3.png'); background-color: #fff; }
+        /* A imagem agora usa object-fit: contain para nunca cortar */
+        .background-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            pointer-events: none;
+        }
 
+        /* Container de botões fixo sobre a imagem */
+        .hotspot-container {
+            position: absolute;
+            /* ALUNAS: A posição agora é relativa à imagem centralizada */
+            top: var(--posicao-vertical-botoes);
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: var(--espaco-entre-botoes);
+            width: 100%;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .hotspot {
+            width: var(--tamanho-clicavel);
+            height: var(--tamanho-clicavel);
+            background: rgba(255, 255, 255, 0); /* Invisível */
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Botão de Som */
         .btn-audio {
             position: fixed;
             top: 25px; right: 25px;
@@ -56,30 +101,11 @@ Lei 9.610/98 – Direitos Autorais.
             -webkit-tap-highlight-color: transparent;
         }
 
-        .hotspot-container {
-            position: absolute;
-            bottom: var(--distancia-botoes-rodape);
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: var(--espaco-entre-botoes);
-        }
-
-        .hotspot {
-            width: var(--tamanho-clicavel);
-            height: var(--tamanho-clicavel);
-            background: rgba(255, 255, 255, 0); 
-            border-radius: 50%;
-            cursor: pointer;
-            border: none;
-            outline: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-
+        /* Botão de Voltar (X) */
         .btn-x {
             position: absolute;
-            top: 25px;
-            left: 25px; 
+            top: 10%; /* Relativo ao topo da imagem */
+            left: 10%; 
             width: 50px;
             height: 50px;
             background-color: var(--cor-botao-x);
@@ -102,35 +128,40 @@ Lei 9.610/98 – Direitos Autorais.
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
         }
 
-        .copyright { display: none !important; visibility: hidden; pointer-events: none; }
+        .copyright { display: none !important; }
     </style>
 </head>
 <body onclick="iniciarAudioAutomatico()">
 
-    <audio id="musica" loop>
-        <source src="audio.mp3" type="audio/mpeg">
+    <audio id="musica" loop playsinline> <source src="audio.mp3" type="audio/mpeg">
     </audio>
 
     <button class="btn-audio" onclick="toggleAudio(event)" id="audioControl">🔊</button>
 
     <div id="principal" class="page active">
-        <div class="hotspot-container">
-            <div class="hotspot" onclick="window.open('https://wa.me/5518988182488?text=confirmo%20presença%20neste%20dia%20especial')"></div>
-            <div class="hotspot" onclick="irParaPagina3()"></div>
-            <div class="hotspot" onclick="irParaSugestao()"></div>
+        <div class="media-wrapper">
+            <img src="pagina.png" class="background-img" alt="Convite">
+            
+            <div class="hotspot-container">
+                <div class="hotspot" onclick="window.open('https://wa.me/5518988182488?text=confirmo%20presença')"></div>
+                <div class="hotspot" onclick="irParaPagina3()"></div>
+                <div class="hotspot" onclick="irParaSugestao()"></div>
+            </div>
         </div>
     </div>
 
     <div id="sugestao" class="page">
-        <button class="btn-x" onclick="voltarParaPrincipal()">✕</button>
+        <div class="media-wrapper">
+            <img src="pagina2.png" class="background-img">
+            <button class="btn-x" onclick="voltarParaPrincipal()">✕</button>
+        </div>
     </div>
 
     <div id="pagina3" class="page">
-        <button class="btn-x" onclick="voltarParaPrincipal()">✕</button>
-    </div>
-
-    <div class="copyright" aria-hidden="true">
-        © 2026 Cristiane Oliveira.
+        <div class="media-wrapper">
+            <img src="pagina3.png" class="background-img">
+            <button class="btn-x" onclick="voltarParaPrincipal()">✕</button>
+        </div>
     </div>
 
     <script>
@@ -140,7 +171,7 @@ Lei 9.610/98 – Direitos Autorais.
 
         function iniciarAudioAutomatico() {
             if (!audioIniciado) {
-                audio.play();
+                audio.play().catch(e => console.log("Aguardando interação"));
                 audioIniciado = true;
                 btnAudio.innerHTML = "🔊";
             }
@@ -157,21 +188,9 @@ Lei 9.610/98 – Direitos Autorais.
             }
         }
 
-        // Navegação
-        function irParaSugestao() {
-            fecharTodas();
-            document.getElementById('sugestao').classList.add('active');
-        }
-
-        function irParaPagina3() {
-            fecharTodas();
-            document.getElementById('pagina3').classList.add('active');
-        }
-
-        function voltarParaPrincipal() {
-            fecharTodas();
-            document.getElementById('principal').classList.add('active');
-        }
+        function irParaSugestao() { fecharTodas(); document.getElementById('sugestao').classList.add('active'); }
+        function irParaPagina3() { fecharTodas(); document.getElementById('pagina3').classList.add('active'); }
+        function voltarParaPrincipal() { fecharTodas(); document.getElementById('principal').classList.add('active'); }
 
         function fecharTodas() {
             const paginas = document.querySelectorAll('.page');
