@@ -10,26 +10,24 @@
             --cor-botao-som: #9b59b6; 
             
             /* ALUNAS: Ajustem a posição vertical dos botões aqui (em %) */
-            /* 80% significa que o botão está a 80% do topo da imagem */
+            /* Diminuir o número sobe os botões, aumentar o número desce. */
             --posicao-vertical-botoes: 85%;
             
             --espaco-entre-botoes: 5%; 
             --tamanho-clicavel: 65px; 
         }
 
-        /* Ajuste para evitar rolagem e aplicar cores de fundo */
         body, html { 
             margin: 0; 
             padding: 0; 
             width: 100%; 
-            /* Substituído vh por dvh para evitar cortes no Safari */
             height: 100dvh; 
             overflow: hidden; 
             font-family: sans-serif; 
             background: #000; 
         }
 
-        /* Container principal que mantém a proporção da arte */
+        /* Container que mantém a arte centralizada sem cortes */
         .media-wrapper {
             position: relative;
             width: 100%;
@@ -50,7 +48,6 @@
 
         .active { display: flex; }
 
-        /* A imagem agora usa object-fit: contain para nunca cortar */
         .background-img {
             width: 100%;
             height: 100%;
@@ -58,34 +55,11 @@
             pointer-events: none;
         }
 
-        /* Container de botões fixo sobre a imagem */
-        .hotspot-container {
-            position: absolute;
-            /* ALUNAS: A posição agora é relativa à imagem centralizada */
-            top: var(--posicao-vertical-botoes);
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: flex;
-            gap: var(--espaco-entre-botoes);
-            width: 100%;
-            justify-content: center;
-            z-index: 10;
-        }
-
-        .hotspot {
-            width: var(--tamanho-clicavel);
-            height: var(--tamanho-clicavel);
-            background: rgba(255, 255, 255, 0); /* Invisível */
-            border-radius: 50%;
-            cursor: pointer;
-            border: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        /* Botão de Som */
+        /* Botão de Som - LADO ESQUERDO com PULSE */
         .btn-audio {
             position: fixed;
-            top: 25px; right: 25px;
+            top: 25px; 
+            left: 25px; /* Ajustado para a esquerda */
             width: 45px; height: 45px;
             background-color: var(--cor-botao-som);
             color: white;
@@ -99,15 +73,16 @@
             font-size: 20px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.3);
             -webkit-tap-highlight-color: transparent;
+            animation: pulse 1.5s infinite; /* Adicionado pulse */
         }
 
-        /* Botão de Voltar (X) */
+        /* Botão de Fechar (X) - LADO DIREITO */
         .btn-x {
             position: absolute;
-            top: 10%; /* Relativo ao topo da imagem */
-            left: 10%; 
-            width: 50px;
-            height: 50px;
+            top: 25px;
+            right: 25px; /* Ajustado para a direita */
+            width: 45px;
+            height: 45px;
             background-color: var(--cor-botao-x);
             color: white;
             border-radius: 50%;
@@ -117,9 +92,31 @@
             cursor: pointer;
             border: none;
             font-weight: bold;
-            font-size: 22px;
-            animation: pulse 1.5s infinite;
+            font-size: 20px;
             z-index: 9998;
+        }
+
+        /* Container dos Hotspots (Botões invisíveis sobre a arte) */
+        .hotspot-container {
+            position: absolute;
+            top: var(--posicao-vertical-botoes);
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: var(--espaco-entre-botoes);
+            width: 100%;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .hotspot {
+            width: var(--tamanho-clicavel);
+            height: var(--tamanho-clicavel);
+            background: rgba(255, 255, 255, 0); 
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         @keyframes pulse {
@@ -133,14 +130,15 @@
 </head>
 <body onclick="iniciarAudioAutomatico()">
 
-    <audio id="musica" loop playsinline> <source src="audio.mp3" type="audio/mpeg">
+    <audio id="musica" loop playsinline>
+        <source src="audio.mp3" type="audio/mpeg">
     </audio>
 
     <button class="btn-audio" onclick="toggleAudio(event)" id="audioControl">🔊</button>
 
     <div id="principal" class="page active">
         <div class="media-wrapper">
-            <img src="pagina.png" class="background-img" alt="Convite">
+            <img src="pagina.png" class="background-img">
             
             <div class="hotspot-container">
                 <div class="hotspot" onclick="window.open('https://wa.me/5518988182488?text=confirmo%20presença')"></div>
@@ -171,7 +169,7 @@
 
         function iniciarAudioAutomatico() {
             if (!audioIniciado) {
-                audio.play().catch(e => console.log("Aguardando interação"));
+                audio.play().catch(e => console.log("Aguardando clique do usuário"));
                 audioIniciado = true;
                 btnAudio.innerHTML = "🔊";
             }
