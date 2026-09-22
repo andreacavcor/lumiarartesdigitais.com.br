@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Convite Especial</title>
+<style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    
+    html, body { 
+        width: 100%; height: 100%; 
+        background: #000; overflow: hidden; position: fixed; 
+        font-family: 'Arial', sans-serif; -webkit-font-smoothing: antialiased; 
+    }
+    
+    .page-overlay { 
+        position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; 
+        z-index: 9999; background: #000; transition: opacity 0.5s ease; 
+    }
+    .bg-btn { 
+        width: 100%; height: 100%; background-image: url('https://res.cloudinary.com/dqt9dstpv/image/upload/v1790093444/C%C3%B3pia_de_LINK_Capa_convite_jardim_encantado_ROSA_borboleta_rwnepe.jpg'); 
+        background-size: contain; background-repeat: no-repeat; background-position: center; cursor: pointer; 
+    }
+
+    #container-canva {
+        display: none; position: absolute; top: 0; left: 0; width: 100vw; height: 100dvh; 
+        overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch;
+    }
+    
+    .invite-wrapper { position: relative; width: 100%; max-width: 600px; margin: 0 auto; }
+    .invite-media { width: 100%; display: block; height: auto; pointer-events: none; }
+    .interactive-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+    #timer { 
+        position: absolute; z-index: 200;
+        container-type: inline-size; display: flex; flex-direction: column; 
+        align-items: center; justify-content: center; color: #eb3787; 
+        text-shadow: 2px 2px 5px rgba(0,0,0,0.8); 
+    }
+    #timer p { font-size: 6.5cqi; margin-bottom: 2cqi; font-weight: bold; letter-spacing: 1px; margin-top: 0; white-space: nowrap; text-align: center; }
+    .t-container { display: flex; justify-content: center; align-items: center; width: 100%; gap: 4cqi; }
+    .t-num { display: flex; flex-direction: column; align-items: center; line-height: 1; }
+    .t-val { font-size: 18cqi; font-weight: bold; }
+    .t-lab { font-size: 4cqi; opacity: 0.9; letter-spacing: 1px; margin-top: 1.5cqi; font-weight: normal; }
+
+    .btn-link { position: absolute; cursor: pointer; display: block; z-index: 10; text-decoration: none; border-radius: 50%; }
+
+    #music-control {
+        position: fixed; bottom: 25px; right: 25px; width: 50px; height: 50px;
+        background-color: #eb3787; border-radius: 50%; display: none; 
+        justify-content: center; align-items: center; z-index: 1000; cursor: pointer; 
+        box-shadow: 0 4px 15px rgba(0,0,0,0.4); border: none; animation: pulse-soft 2s infinite ease-in-out;
+    }
+    @keyframes pulse-soft { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+    #music-control svg { width: 24px; height: 24px; fill: white; }
+</style>
+</head>
+<body>
+
+<audio id="bgMusic" loop preload="auto" playsinline><source src="https://res.cloudinary.com/dqt9dstpv/video/upload/v1790093748/taylor-swift-wildest-dreams_nICJ3eFU_y1vcib.mp3" type="audio/mpeg"></audio>
+<button id="music-control" onclick="toggleMusic()"><svg viewBox="0 0 24 24"><path d="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.85 14,18.71V20.77C18.03,19.86 21,16.28 21,12C21,7.72 18.03,4.14 14,3.23M3,9V15H7L12,20V4L7,9H3Z"/></svg></button>
+
+<div class="page-overlay" id="overlay"><div class="bg-btn" id="btnAbrir"></div></div>
+
+<div id="container-canva">
+    <div class="invite-wrapper">
+        <img class="invite-media" src="https://res.cloudinary.com/dqt9dstpv/image/upload/v1790093444/C%C3%B3pia_de_LINK_Convite_Jardim_encantado_borboleta_rosa_i5seui.jpg" alt="Convite">
+        <div class="interactive-layer">
+            
+            
+        </div>
+    </div>
+</div>
+
+<script>
+    const audio = document.getElementById('bgMusic'); const musicBtn = document.getElementById('music-control'); function toggleMusic() { audio.paused ? audio.play() : audio.pause(); }
+
+    const overlay = document.getElementById('overlay');
+    const btnAbrir = document.getElementById('btnAbrir');
+    const containerCanva = document.getElementById('container-canva');
+    
+    btnAbrir.addEventListener('click', () => {
+        audio.play().catch(() => {});
+        overlay.style.opacity = '0';
+        setTimeout(() => {
+            overlay.style.display = 'none';
+            containerCanva.style.display = 'block';
+            musicBtn.style.display = 'flex';
+        }, 500);
+    });
+
+    
+    
+    document.addEventListener('contextmenu', e => e.preventDefault());
+</script>
+</body>
+</html>
