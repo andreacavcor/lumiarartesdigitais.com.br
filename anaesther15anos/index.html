@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Ana Esther 15 anos</title>
+<style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    
+    html, body { 
+        width: 100%; height: 100%; 
+        background: #000; overflow: hidden; position: fixed; 
+        font-family: 'Arial', sans-serif; -webkit-font-smoothing: antialiased; 
+    }
+    
+    .page-overlay { 
+        position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; 
+        z-index: 9999; background: #000; transition: opacity 0.5s ease; 
+    }
+    .bg-btn { 
+        width: 100%; height: 100%; background-image: url('https://res.cloudinary.com/dqt9dstpv/image/upload/v1790279327/1_w5c6lr.jpg'); 
+        background-size: contain; background-repeat: no-repeat; background-position: center; cursor: pointer; 
+    }
+
+    #container-canva {
+        display: none; position: absolute; top: 0; left: 0; width: 100vw; height: 100dvh; 
+        overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch;
+    }
+    
+    .invite-wrapper { position: relative; width: 100%; max-width: 600px; margin: 0 auto; }
+    .invite-media { width: 100%; display: block; height: auto; pointer-events: none; }
+    .interactive-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+    #timer { 
+        position: absolute; z-index: 200;
+        container-type: inline-size; display: flex; flex-direction: column; 
+        align-items: center; justify-content: center; color: #d83f83; 
+        text-shadow: 2px 2px 5px rgba(0,0,0,0.8); 
+    }
+    #timer p { font-size: 6.5cqi; margin-bottom: 2cqi; font-weight: bold; letter-spacing: 1px; margin-top: 0; white-space: nowrap; text-align: center; }
+    .t-container { display: flex; justify-content: center; align-items: center; width: 100%; gap: 4cqi; }
+    .t-num { display: flex; flex-direction: column; align-items: center; line-height: 1; }
+    .t-val { font-size: 18cqi; font-weight: bold; }
+    .t-lab { font-size: 4cqi; opacity: 0.9; letter-spacing: 1px; margin-top: 1.5cqi; font-weight: normal; }
+
+    .btn-link { position: absolute; cursor: pointer; display: block; z-index: 10; text-decoration: none; border-radius: 50%; }
+
+    #music-control {
+        position: fixed; bottom: 25px; right: 25px; width: 50px; height: 50px;
+        background-color: #9b86c8; border-radius: 50%; display: none; 
+        justify-content: center; align-items: center; z-index: 1000; cursor: pointer; 
+        box-shadow: 0 4px 15px rgba(0,0,0,0.4); border: none; animation: pulse-soft 2s infinite ease-in-out;
+    }
+    @keyframes pulse-soft { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+    #music-control svg { width: 24px; height: 24px; fill: white; }
+</style>
+</head>
+<body>
+
+<audio id="bgMusic" loop preload="auto" playsinline><source src="https://res.cloudinary.com/dqt9dstpv/video/upload/v1790093748/taylor-swift-wildest-dreams_nICJ3eFU_y1vcib.mp3" type="audio/mpeg"></audio>
+<button id="music-control" onclick="toggleMusic()"><svg viewBox="0 0 24 24"><path d="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.85 14,18.71V20.77C18.03,19.86 21,16.28 21,12C21,7.72 18.03,4.14 14,3.23M3,9V15H7L12,20V4L7,9H3Z"/></svg></button>
+
+<div class="page-overlay" id="overlay"><div class="bg-btn" id="btnAbrir"></div></div>
+
+<div id="container-canva">
+    <div class="invite-wrapper">
+        <img class="invite-media" src="https://res.cloudinary.com/dqt9dstpv/image/upload/v1790279327/2_odz2an.jpg" alt="Convite">
+        <div class="interactive-layer">
+            
+            <div id="timer" style="top:45.46%; left:22.90%; width:53.19%; height:3.35%;">
+                
+                <div class="t-container">
+                    <div class="t-num"><span class="t-val" id="d">00</span><span class="t-lab">DIAS</span></div>
+                    <div class="t-num"><span class="t-val" id="h">00</span><span class="t-lab">HORAS</span></div>
+                    <div class="t-num"><span class="t-val" id="mi">00</span><span class="t-lab">MIN</span></div>
+                    <div class="t-num"><span class="t-val" id="se">00</span><span class="t-lab">SEG</span></div>
+                </div>
+            </div>
+            <a href="https://wa.me/5585986146007?text=Ol%C3%A1%2C%20gostaria%20de%20confirmar%20a%20minha%20presen%C3%A7a%20no%20anivers%C3%A1rio%20da%20Ana%20Esther!" target="_blank" class="btn-link" style="top:56.22%; left:11.74%; width:21.98%; height:3.95%;"></a><a href="https://maps.app.goo.gl/WwhyytrhZkXY49T69" target="_blank" class="btn-link" style="top:64.04%; left:12.03%; width:21.95%; height:3.95%;"></a><a href="https://res.cloudinary.com/dqt9dstpv/image/upload/v1790279327/4_yw6adh.jpg" target="_blank" class="btn-link" style="top:56.30%; left:65.22%; width:21.95%; height:3.95%;"></a><a href="https://res.cloudinary.com/dqt9dstpv/image/upload/v1790279327/5_lpe8jg.jpg" target="_blank" class="btn-link" style="top:63.65%; left:64.35%; width:23.76%; height:4.27%;"></a>
+        </div>
+    </div>
+</div>
+
+<script>
+    const audio = document.getElementById('bgMusic'); const musicBtn = document.getElementById('music-control'); function toggleMusic() { audio.paused ? audio.play() : audio.pause(); }
+
+    const overlay = document.getElementById('overlay');
+    const btnAbrir = document.getElementById('btnAbrir');
+    const containerCanva = document.getElementById('container-canva');
+    
+    btnAbrir.addEventListener('click', () => {
+        audio.play().catch(() => {});
+        overlay.style.opacity = '0';
+        setTimeout(() => {
+            overlay.style.display = 'none';
+            containerCanva.style.display = 'block';
+            musicBtn.style.display = 'flex';
+        }, 500);
+    });
+
+    
+    function updateTimer() {
+        const target = new Date("2026-10-31T19:00").getTime();
+        const diff = target - new Date().getTime();
+        
+        if (diff <= 0) { 
+            document.getElementById('timer').innerHTML = "<p style='font-size: 10cqi; font-weight: bold;'>O DIA CHEGOU!</p>"; 
+            return; 
+        }
+        
+        const pad = (num) => num.toString().padStart(2, '0');
+        document.getElementById('d').innerText = pad(Math.floor(diff / 86400000));
+        document.getElementById('h').innerText = pad(Math.floor((diff % 86400000) / 3600000));
+        document.getElementById('mi').innerText = pad(Math.floor((diff % 3600000) / 60000));
+        document.getElementById('se').innerText = pad(Math.floor((diff % 60000) / 1000));
+    }
+    setInterval(updateTimer, 1000); updateTimer();
+    
+    
+    document.addEventListener('contextmenu', e => e.preventDefault());
+</script>
+</body>
+</html>
